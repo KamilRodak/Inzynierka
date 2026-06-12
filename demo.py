@@ -44,12 +44,13 @@ while last_audio!="stop":
         nazwa_pliku = last_audio + ".py"
         print("Próbuję uruchomić plik: "+nazwa_pliku)
         try:
-            subprocess.run(["python","makra/"+last_audio+".py" ])
+            subprocess.Popen(["python","makra/"+last_audio+".py" ])
         except FileNotFoundError:
             print("Błąd: Nie znaleziono pliku o nazwie "+ nazwa_pliku)
         except subprocess.CalledProcessError:
             print("Błąd: Plik "+nazwa_pliku+" wywołał błąd podczas działania.")
-    new_command_available = False        
+    new_command_available = False
+    time.sleep(0.1)        
 # calling this function requests that the background listener stop listening
 
 stop_listening(wait_for_stop=False)
