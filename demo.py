@@ -44,7 +44,7 @@ while last_audio!="stop":
         nazwa_pliku = last_audio + ".py"
         print("Próbuję uruchomić plik: "+nazwa_pliku)
         try:
-            subprocess.run(["python",last_audio+".py" ])
+            subprocess.run(["python","makra/"+last_audio+".py" ])
         except FileNotFoundError:
             print("Błąd: Nie znaleziono pliku o nazwie "+ nazwa_pliku)
         except subprocess.CalledProcessError:
