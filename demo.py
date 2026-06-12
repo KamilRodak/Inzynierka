@@ -31,6 +31,8 @@ def callback(recognizer, audio):
 
 
 r = sr.Recognizer()
+r.phrase_threshold = 0.5
+r.pause_threshold = 0.6
 m = sr.Microphone()
 with m as source:
     r.adjust_for_ambient_noise(source)  # we only need to calibrate once, before we start listening
@@ -49,7 +51,7 @@ while last_audio!="stop":
             print("Błąd: Nie znaleziono pliku o nazwie "+ nazwa_pliku)
         except subprocess.CalledProcessError:
             print("Błąd: Plik "+nazwa_pliku+" wywołał błąd podczas działania.")
-    new_command_available = False
+        new_command_available = False
     time.sleep(0.1)        
 # calling this function requests that the background listener stop listening
 
