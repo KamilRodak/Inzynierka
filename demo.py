@@ -5,6 +5,9 @@
 import time
 import subprocess
 import speech_recognition as sr
+import datetime
+import os
+from pathlib import Path
 
 last_audio=""
 new_command_available = False
@@ -20,6 +23,8 @@ def callback(recognizer, audio):
         last_audio=recognizer.recognize_google(audio,language="pl-PL")
         
         print("Google Speech Recognition thinks you said " + last_audio)
+
+
         new_command_available = True
         
         
@@ -32,7 +37,7 @@ def callback(recognizer, audio):
 
 r = sr.Recognizer()
 r.phrase_threshold = 0.5
-r.pause_threshold = 0.6
+r.pause_threshold = 0.5
 m = sr.Microphone()
 with m as source:
     r.adjust_for_ambient_noise(source)  # we only need to calibrate once, before we start listening
@@ -46,13 +51,26 @@ while last_audio!="stop":
         nazwa_pliku = last_audio + ".py"
         print("Próbuję uruchomić plik: "+nazwa_pliku)
         try:
-            subprocess.Popen(["python","makra/"+last_audio+".py" ])
+            subprocess.Popen(["python","makra/"+last_audio+".py" ])    
+
+            logs_sciezka = Path('./logs')
+            logs_sciezka.mkdir(exist_ok=True)
+
+            if(len(os.listdir(logs_sciezka))>10):
+                logs = [l for l in logs_sciezka.iterdir() if l.is_file()]
+                najstarszy_log = min(logs, key=os.path.getmtime)
+                najstarszy_log.unlink()
+                
+            teraz = datetime.datetime.now()
+            nazwa_loga = f"log_{teraz.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
+            with open(logs_sciezka/nazwa_loga,"w",encoding="utf-8") as log:
+                log.write(last_audio) 
         except FileNotFoundError:
             print("Błąd: Nie znaleziono pliku o nazwie "+ nazwa_pliku)
         except subprocess.CalledProcessError:
             print("Błąd: Plik "+nazwa_pliku+" wywołał błąd podczas działania.")
         new_command_available = False
-    time.sleep(0.1)        
+    time.sleep(0.1)    
 # calling this function requests that the background listener stop listening
 
 stop_listening(wait_for_stop=False)
