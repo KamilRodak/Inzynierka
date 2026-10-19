@@ -39,6 +39,7 @@ r = sr.Recognizer()
 r.phrase_threshold = 0.5
 r.pause_threshold = 0.5
 m = sr.Microphone()
+
 with m as source:
     r.adjust_for_ambient_noise(source)  # we only need to calibrate once, before we start listening
 print("słucham")
