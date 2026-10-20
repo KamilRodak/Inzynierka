@@ -1,1 +1,0 @@
-Zablokuj skrócić skasować chyba długość tego API znaczy tak nazywamy takiej biblioteki Pythona tam ona jest na na gitarze na jakimś projekcie i za pomocą tej biblioteki robimy wykrywanie głosu i ona jakby Roswell wrzuca na aplikacji Google wraca i dlatego też może troszeczkę ta aplikacja tutaj działać wolniej bo ewron aplikację teraz kalkulator
