@@ -1,3 +1,6 @@
 logs
 .idea
 .venv
+.gitignore
+.env
+ai_router_stare_gemini.py
